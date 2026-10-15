@@ -10,6 +10,7 @@ const siteLinks = {
 function App() {
   const pathname = window.location.pathname.replace(/\/$/, '') || '/'
   const publishedProjects = projects.filter((project) => project.published)
+  const featuredProjects = publishedProjects.filter((project) => project.featured)
 
   if (pathname.startsWith('/projects/')) {
     const slug = decodeURIComponent(pathname.replace('/projects/', ''))
@@ -18,7 +19,7 @@ function App() {
     return <ProjectDetailPage project={project} />
   }
 
-  return <HomePage projects={publishedProjects} />
+  return <HomePage projects={featuredProjects} />
 }
 
 function HomePage({ projects }) {
@@ -79,7 +80,10 @@ function HomePage({ projects }) {
               ))}
             </div>
           ) : (
-            <p>No published projects yet. Set a project&apos;s published field to true.</p>
+            <p>
+              No featured projects yet. Set a published project&apos;s featured field
+              to true.
+            </p>
           )}
         </section>
 

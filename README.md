@@ -37,7 +37,10 @@ npm run preview
 ## 4) Add or edit a project
 
 Main data file:
-- `src/data/projects.js`
+- `src/data/projects/`
+
+Each project has its own file in `src/data/projects/`. The directory's `index.js`
+collects those files into the project's data list.
 
 Each project object includes:
 - `slug`
@@ -50,15 +53,20 @@ Each project object includes:
 - `media` (each item has `type`, `src`, `alt`, `caption`)
 - `credits`
 - `published`
+- `featured`
 
 ### Publish flow
 
-1. Add or edit a project in `src/data/projects.js`.
+1. Add or edit a project file in `src/data/projects/` and import it from
+   `src/data/projects/index.js`.
 2. Put that project's media files in:
    - `public/projects/<slug>/`
 3. Set `published: true` when ready to show the project on the site.
+4. Set `featured: true` when the published project should appear in the Featured Work
+   section.
 
-Only projects with `published: true` appear on the home page and have accessible detail pages.
+Only projects with `published: true` have accessible detail pages. Only projects with
+both `published: true` and `featured: true` appear in the Featured Work section.
 
 ## 5) Important file map (beginner-friendly)
 
@@ -68,8 +76,8 @@ Only projects with `published: true` appear on the home page and have accessible
   - Project detail page routing logic
 - `src/components/ProjectCard.jsx`
   - Reusable project card used in featured work
-- `src/data/projects.js`
-  - Single source of truth for portfolio projects
+- `src/data/projects/`
+  - Individual project data files and their index
 - `src/index.css`
   - Site styling (responsive, accessible focus states, reduced-motion support)
 - `index.html`
