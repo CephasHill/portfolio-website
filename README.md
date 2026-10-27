@@ -48,10 +48,12 @@ Each project object includes:
 - `year`
 - `category`
 - `role`
+- `thumbnail` (an object with `src` and `alt`, used only for project cards)
 - `description`
 - `tools`
-- `media` (each item has `type`, `src`, `alt`, `caption`)
-- `credits`
+- `media` (each item has `type`, `src`, `alt`, `caption`; `type` can be `image`,
+  `video`, or `embed`)
+- `credits` (each item has `label`, `name`, and an optional `url`)
 - `published`
 - `featured`
 
@@ -59,14 +61,21 @@ Each project object includes:
 
 1. Add or edit a project file in `src/data/projects/` and import it from
    `src/data/projects/index.js`.
-2. Put that project's media files in:
+2. Put that project's local media files in:
    - `public/projects/<slug>/`
+   
+   Video embeds can use a privacy-enhanced external URL in the project's `media`
+   list instead of a local file.
 3. Set `published: true` when ready to show the project on the site.
 4. Set `featured: true` when the published project should appear in the Featured Work
    section.
 
 Only projects with `published: true` have accessible detail pages. Only projects with
 both `published: true` and `featured: true` appear in the Featured Work section.
+
+The optional `thumbnail` field controls the image shown on the Featured Work card.
+It is separate from `media`, so a card thumbnail does not need to appear in the
+project's case-study media feed.
 
 ## 5) Important file map (beginner-friendly)
 

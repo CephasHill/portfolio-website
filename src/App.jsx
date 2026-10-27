@@ -29,13 +29,20 @@ function HomePage({ projects }) {
         Skip to main content
       </a>
       <header className="site-header">
-        <p className="eyebrow">VFX / Animation Technical Director</p>
-        <h1>Peter Hill</h1>
-        <p>
-          Building practical workflows, tools, and visuals for animation and VFX
-          productions.
-        </p>
-        <nav aria-label="Primary">
+        <div className="header-bar">
+          <a className="brand-mark" href="/" aria-label="Peter Hill home">
+            PH<span>.</span>
+          </a>
+        </div>
+        <div className="hero-copy">
+          <p className="eyebrow">VFX / Animation Technical Director</p>
+          <h1>Peter Hill</h1>
+          <p className="hero-intro">
+            I build practical workflows, artist-friendly tools, and visual experiences
+            for animation and VFX productions.
+          </p>
+        </div>
+        <nav aria-label="Primary" className="hero-nav">
           <ul className="inline-links">
             <li>
               <HeaderLink
@@ -52,14 +59,19 @@ function HomePage({ projects }) {
               />
             </li>
           </ul>
+          <span className="scroll-cue">Scroll to explore <span aria-hidden="true">↓</span></span>
         </nav>
       </header>
 
       <main id="main-content">
         <section aria-labelledby="reel-heading" className="section">
-          <h2 id="reel-heading">Demo Reel</h2>
+          <div className="section-heading">
+            <p className="section-number">01 / INTRO</p>
+            <h2 id="reel-heading">Demo Reel</h2>
+          </div>
           <div className="reel-panel">
-            <p>
+            <div className="reel-icon" aria-hidden="true">▶</div>
+            <p className="reel-copy">
               Add your reel link or embedded video here. Keep autoplay disabled and
               sound off by default.
             </p>
@@ -72,7 +84,13 @@ function HomePage({ projects }) {
         </section>
 
         <section aria-labelledby="featured-heading" className="section">
-          <h2 id="featured-heading">Featured Work</h2>
+          <div className="section-heading section-heading-row">
+            <div>
+              <p className="section-number">02 / SELECTED WORK</p>
+              <h2 id="featured-heading">Featured Work</h2>
+            </div>
+            <span className="section-aside">01 — {String(projects.length).padStart(2, '0')}</span>
+          </div>
           {projects.length > 0 ? (
             <div className="project-grid">
               {projects.map((project) => (
@@ -88,7 +106,10 @@ function HomePage({ projects }) {
         </section>
 
         <section aria-labelledby="about-heading" className="section">
-          <h2 id="about-heading">About</h2>
+          <div className="section-heading">
+            <p className="section-number">03 / APPROACH</p>
+            <h2 id="about-heading">About</h2>
+          </div>
           <p>
             I&apos;m a VFX/Animation Technical Director focused on reliable pipelines,
             artist-friendly tooling, and clear visual communication.
@@ -100,7 +121,10 @@ function HomePage({ projects }) {
         </section>
 
         <section aria-labelledby="contact-heading" className="section">
-          <h2 id="contact-heading">Contact</h2>
+          <div className="section-heading">
+            <p className="section-number">04 / NEXT STEP</p>
+            <h2 id="contact-heading">Contact</h2>
+          </div>
           <p>
             Recruiters and collaborators can reach out directly:
             <br />
@@ -134,9 +158,12 @@ function ProjectDetailPage({ project }) {
 
   return (
     <main className="section project-page">
-      <a className="text-link" href="/">
-        ← Back to home
-      </a>
+      <div className="project-back">
+        <a className="text-link" href="/">
+          <span aria-hidden="true">←</span> Back to home
+        </a>
+        <p className="section-number">PROJECT / {project.year}</p>
+      </div>
       <h1>{project.title}</h1>
       <p className="project-meta">
         <span>{project.year}</span>
@@ -145,23 +172,47 @@ function ProjectDetailPage({ project }) {
         <span aria-hidden="true">•</span>
         <span>{project.role}</span>
       </p>
-      <p>{project.description}</p>
-
-      <section aria-labelledby="tools-heading">
-        <h2 id="tools-heading">Tools</h2>
-        <ul className="tag-list">
-          {project.tools.map((tool) => (
-            <li key={tool}>{tool}</li>
+      <div className="project-overview">
+        <div className="project-description">
+          <p className="section-number">ABOUT THE PROJECT</p>
+          {project.description.split('\n\n').map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
           ))}
-        </ul>
-      </section>
+        </div>
+        <section aria-labelledby="tools-heading" className="project-tools">
+          <p className="section-number">SOFTWARE</p>
+          <h2 id="tools-heading">Tools</h2>
+          <ul className="tag-list">
+            {project.tools.map((tool) => (
+              <li key={tool}>{tool}</li>
+            ))}
+          </ul>
+        </section>
+      </div>
 
       <section aria-labelledby="media-heading">
-        <h2 id="media-heading">Media</h2>
-        <div className="media-grid">
-          {project.media.map((item) => (
-            <figure key={`${item.type}-${item.src}`} className="media-card">
-              {item.type === 'video' ? (
+        <div className="media-heading">
+          <div>
+            <p className="section-number">PROJECT MEDIA</p>
+            <h2 id="media-heading">The work</h2>
+          </div>
+          <p className="media-heading-note">Finals, breakdowns &amp; process</p>
+        </div>
+        <div className="media-feed">
+          {project.media.map((item, index) => (
+            <figure
+              key={`${item.type}-${item.src}`}
+              className={`media-card ${item.type === 'embed' ? 'media-card-video' : 'media-card-still'}`}
+            >
+              {item.type === 'embed' ? (
+                <iframe
+                  src={item.src}
+                  title={item.alt}
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              ) : item.type === 'video' ? (
                 <video controls preload="metadata" aria-label={item.alt}>
                   <source src={item.src} type="video/mp4" />
                   Your browser does not support the video tag.
@@ -169,7 +220,10 @@ function ProjectDetailPage({ project }) {
               ) : (
                 <img src={item.src} alt={item.alt} loading="lazy" />
               )}
-              <figcaption>{item.caption}</figcaption>
+              <figcaption>
+                <span className="media-index">{String(index + 1).padStart(2, '0')}</span>
+                <span>{item.caption}</span>
+              </figcaption>
             </figure>
           ))}
         </div>
@@ -180,7 +234,14 @@ function ProjectDetailPage({ project }) {
         <ul>
           {project.credits.map((credit) => (
             <li key={`${credit.label}-${credit.name}`}>
-              <strong>{credit.label}:</strong> {credit.name}
+              <strong>{credit.label}:</strong>{' '}
+              {credit.url ? (
+                <a className="text-link" href={credit.url} target="_blank" rel="noreferrer">
+                  {credit.name}
+                </a>
+              ) : (
+                credit.name
+              )}
             </li>
           ))}
         </ul>
