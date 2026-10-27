@@ -2,6 +2,7 @@ export default {
   slug: 'todo-unpublished-project',
   title: 'TODO: Unpublished project title',
   year: 'TODO',
+  type: 'VFX / TD',
   category: 'TODO',
   role: 'TODO',
   description: 'TODO: Draft project summary (hidden until published is true).',

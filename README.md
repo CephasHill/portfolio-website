@@ -46,6 +46,7 @@ Each project object includes:
 - `slug`
 - `title`
 - `year`
+- `type` (one of the portfolio filter categories)
 - `category`
 - `role`
 - `thumbnail` (an object with `src` and `alt`, used only for project cards)
@@ -80,9 +81,11 @@ project's case-study media feed.
 ## 5) Important file map (beginner-friendly)
 
 - `src/App.jsx`
-  - Main page layout
-  - Home page sections (hero, reel, featured work, about, contact)
-  - Project detail page routing logic
+-  - Client-side page routing
+- `src/pages/`
+  - One editable JSX file for each page
+- `src/components/PageShell.jsx`
+  - Shared site navigation, page header, and social links
 - `src/components/ProjectCard.jsx`
   - Reusable project card used in featured work
 - `src/data/projects/`

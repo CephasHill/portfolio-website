@@ -2,6 +2,7 @@ export default {
   slug: 'todo-featured-project',
   title: 'TODO: Featured project title',
   year: 'TODO',
+  type: 'VFX / TD',
   category: 'TODO',
   role: 'TODO',
   description: 'TODO: Add an approved description for this project.',

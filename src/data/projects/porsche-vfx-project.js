@@ -2,6 +2,7 @@ export default {
   slug: 'porsche-911-turbo-s-vfx',
   title: 'CG Porsche 911 Turbo S VFX and Composite',
   year: '2026',
+  type: 'VFX / TD',
   category: 'VFX / Compositing',
   role: 'VFX / Lookdev / Compositing Artist',
   thumbnail: {
