@@ -14,26 +14,32 @@ export function SocialLinks() {
   )
 }
 
+export function SiteHeader() {
+  return (
+    <header className="page-header">
+      <div className="header-bar">
+        <a className="brand-mark" href="/" aria-label="Peter Hill home">PH<span>.</span></a>
+        <nav aria-label="Primary" className="site-nav">
+          <a href="/">Home</a>
+          <a href="/demo-reel">Demo reel</a>
+          <HeaderLink href={siteLinks.resumeUrl || '/resume'} label="Resume" />
+          <a href="/portfolio">Portfolio</a>
+          <a href="/about">About</a>
+        </nav>
+      </div>
+    </header>
+  )
+}
+
 export default function PageShell({ eyebrow, title, children }) {
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to main content</a>
-      <header className="page-header">
-        <div className="header-bar">
-          <a className="brand-mark" href="/" aria-label="Peter Hill home">PH<span>.</span></a>
-          <nav aria-label="Primary" className="site-nav">
-            <a href="/">Home</a>
-            <a href="/demo-reel">Demo reel</a>
-            <HeaderLink href={siteLinks.resumeUrl || '/resume'} label="Resume" />
-            <a href="/portfolio">Portfolio</a>
-            <a href="/about">About</a>
-          </nav>
-        </div>
-        <div className="page-title">
-          <p className="eyebrow">{eyebrow}</p>
-          <h1>{title}</h1>
-        </div>
-      </header>
+      <SiteHeader />
+      <div className="page-title page-title-shell">
+        <p className="eyebrow">{eyebrow}</p>
+        <h1>{title}</h1>
+      </div>
       <main id="main-content">{children}</main>
     </>
   )

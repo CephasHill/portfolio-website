@@ -1,16 +1,25 @@
+import { SiteHeader } from '../components/PageShell'
+
 export default function ProjectDetailPage({ project }) {
   if (!project) {
     return (
-      <main className="section">
-        <h1>Project not found</h1>
-        <p>This project is missing or unpublished. Make sure published is true in the project data.</p>
-        <a className="text-link" href="/">Back to home</a>
-      </main>
+      <>
+        <a className="skip-link" href="#main-content">Skip to main content</a>
+        <SiteHeader />
+        <main id="main-content" className="section">
+          <h1>Project not found</h1>
+          <p>This project is missing or unpublished. Make sure published is true in the project data.</p>
+          <a className="text-link" href="/">Back to home</a>
+        </main>
+      </>
     )
   }
 
   return (
-    <main className="section project-page">
+    <>
+      <a className="skip-link" href="#main-content">Skip to main content</a>
+      <SiteHeader />
+      <main id="main-content" className="section project-page">
       <div className="project-back">
         <a className="text-link" href="/"><span aria-hidden="true">←</span> Back to home</a>
         <p className="section-number">PROJECT / {project.year}</p>
@@ -52,6 +61,7 @@ export default function ProjectDetailPage({ project }) {
           {project.credits.map((credit) => <li key={`${credit.label}-${credit.name}`}><strong>{credit.label}:</strong>{' '}{credit.url ? <a className="text-link" href={credit.url} target="_blank" rel="noreferrer">{credit.name}</a> : credit.name}</li>)}
         </ul>
       </section>
-    </main>
+      </main>
+    </>
   )
 }

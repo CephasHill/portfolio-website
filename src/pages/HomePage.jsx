@@ -23,20 +23,29 @@ export default function HomePage({ projects }) {
           <p className="hero-intro">I build practical workflows, artist-friendly tools, and visual experiences for animation and VFX productions.</p>
           <SocialLinks />
         </div>
-        <nav aria-label="Contact links" className="hero-nav">
-          <ul className="inline-links">
-            <li><HeaderLink href={siteLinks.contactEmail && `mailto:${siteLinks.contactEmail}`} label="Contact" todoText="TODO: Add contact email" /></li>
-          </ul>
+        <div className="hero-nav">
           <span className="scroll-cue">Scroll to explore <span aria-hidden="true">↓</span></span>
-        </nav>
+        </div>
       </header>
       <main id="main-content">
         <section aria-labelledby="featured-heading" className="section">
           <div className="section-heading section-heading-row">
-            <div><p className="section-number">FEATURED PROJECT</p><h2 id="featured-heading">Selected work</h2></div>
+            <div><p className="section-number">FEATURED</p><h2 id="featured-heading">Featured work</h2></div>
             <span className="section-aside">01 — {String(projects.length).padStart(2, '0')}</span>
           </div>
           {projects.length > 0 ? <div className="project-grid">{projects.map((project) => <ProjectCard key={project.slug} project={project} />)}</div> : <p>No featured projects yet.</p>}
+        </section>
+        <section aria-labelledby="contact-heading" className="section home-contact">
+          <div className="section-heading">
+            <p className="section-number">CONTACT ME</p>
+            <h2 id="contact-heading">Let&apos;s work together</h2>
+          </div>
+          <p>Recruiters and collaborators can reach out directly:</p>
+          <HeaderLink
+            href={siteLinks.contactEmail && `mailto:${siteLinks.contactEmail}`}
+            label={siteLinks.contactEmail || 'TODO: Add contact email'}
+            todoText="TODO: Add contact email"
+          />
         </section>
       </main>
     </>
