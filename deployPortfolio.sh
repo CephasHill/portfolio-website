@@ -76,7 +76,7 @@ SSH_TARGET="ubuntu@$HOST"
 REMOTE_SERVICE_ROOT='/srv/portfolio'
 RELEASE_ID="$(date -u +%Y%m%dT%H%M%SZ)-$$"
 REMOTE_RELEASE="$REMOTE_SERVICE_ROOT/releases/$RELEASE_ID"
-SSH_KEY_ARGS=(-i "$KEY")
+SSH_KEY_ARGS=(-i "$KEY" -o ServerAliveInterval=30 -o ServerAliveCountMax=6 -o ConnectTimeout=30)
 
 printf '\n----> Install locked dependencies\n'
 npm ci
@@ -94,7 +94,30 @@ printf '\n----> Prepare a new release on %s\n' "$HOST"
 ssh "${SSH_KEY_ARGS[@]}" "$SSH_TARGET" "mkdir -p '$REMOTE_RELEASE'"
 
 printf '\n----> Upload the built site\n'
-scp -r "${SSH_KEY_ARGS[@]}" dist/. "$SSH_TARGET:$REMOTE_RELEASE/"
+while IFS= read -r -d '' local_file; do
+  relative_file="${local_file#dist/}"
+  remote_directory="$REMOTE_RELEASE/$(dirname "$relative_file")"
+
+  ssh "${SSH_KEY_ARGS[@]}" "$SSH_TARGET" "mkdir -p '$remote_directory'" </dev/null
+
+  uploaded=0
+  for attempt in 1 2 3; do
+    printf 'Uploading %s (attempt %s/3)\n' "$relative_file" "$attempt"
+    if scp "${SSH_KEY_ARGS[@]}" "$local_file" "$SSH_TARGET:$REMOTE_RELEASE/$relative_file"; then
+      uploaded=1
+      break
+    fi
+    if [[ "$attempt" -lt 3 ]]; then
+      printf 'Upload interrupted; retrying %s.\n' "$relative_file" >&2
+      sleep 2
+    fi
+  done
+
+  if [[ "$uploaded" -ne 1 ]]; then
+    printf 'Failed to upload %s after 3 attempts.\n' "$relative_file" >&2
+    exit 1
+  fi
+done < <(find dist -type f -print0)
 
 printf '\n----> Activate the new release\n'
 ssh "${SSH_KEY_ARGS[@]}" "$SSH_TARGET" bash -s -- "$REMOTE_SERVICE_ROOT" "$RELEASE_ID" <<'REMOTE_SCRIPT'
