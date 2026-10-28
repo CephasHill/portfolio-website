@@ -48,7 +48,18 @@ export default function ProjectDetailPage({ project }) {
               {item.type === 'embed' ? (
                 <iframe src={item.src} title={item.alt} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen />
               ) : item.type === 'video' ? (
-                <video controls preload="metadata" aria-label={item.alt}><source src={item.src} type="video/mp4" />Your browser does not support the video tag.</video>
+                <video
+                  autoPlay={item.autoPlay}
+                  controls
+                  loop={item.loop}
+                  muted={item.autoPlay}
+                  playsInline
+                  poster={item.poster}
+                  preload="metadata"
+                  aria-label={item.alt}
+                >
+                  <source src={item.src} type="video/mp4" />Your browser does not support the video tag.
+                </video>
               ) : <img src={item.src} alt={item.alt} loading="lazy" />}
               <figcaption><span className="media-index">{String(index + 1).padStart(2, '0')}</span><span>{item.caption}</span></figcaption>
             </figure>
