@@ -107,10 +107,9 @@ location / {
 
 Without this fallback, direct refreshes on detail URLs can return 404 errors.
 
-## 7) TODO placeholders to update
+## 7) Optional content updates
 
-- Resume URL (`src/App.jsx`)
-- Contact email (`src/App.jsx`)
-- Demo reel URL (`src/App.jsx`)
-- Project content and media (`src/data/projects.js` and `public/projects/<slug>/`)
+- External resume URL (`src/data/siteLinks.js`) if a hosted PDF should be linked from navigation
+- Contact email (`src/data/siteLinks.js`)
+- Project content and media (`src/data/projects/` and `public/projects/<slug>/`)
 - Social preview image path in `index.html`

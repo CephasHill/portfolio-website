@@ -2,7 +2,7 @@ import { useState } from 'react'
 import ProjectCard from '../components/ProjectCard'
 import PageShell from '../components/PageShell'
 
-const projectTypes = ['All', 'VFX / TD', 'Game Programming', '2D Animation', 'Software']
+const projectTypes = ['All', 'VFX / TD', 'Game Programming', 'Training Videos', '2D Animation', 'Software']
 
 export default function PortfolioPage({ projects }) {
   const [activeType, setActiveType] = useState('All')

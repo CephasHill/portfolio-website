@@ -39,7 +39,7 @@ export default function ProjectDetailPage({ project }) {
       </div>
       <section aria-labelledby="media-heading">
         <div className="media-heading">
-          <div><p className="section-number">PROJECT MEDIA</p><h2 id="media-heading">The work</h2></div>
+          <div><p className="section-number">PROJECT MEDIA</p><h2 id="media-heading">Showcase</h2></div>
           <p className="media-heading-note">Finals, breakdowns &amp; process</p>
         </div>
         <div className="media-feed">
